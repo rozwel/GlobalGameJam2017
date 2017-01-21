@@ -15,8 +15,8 @@ public class ShipThruster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        gameObject.GetComponent<Rigidbody>().AddRelativeForce(0, ThrustPower * Input.GetAxis("Vertical") * Time.deltaTime, 0, ForceMode.Acceleration);
-        gameObject.transform.Rotate(TurnRate * Input.GetAxis("Horizontal") * Time.deltaTime, 0, 0, Space.Self);
+        gameObject.GetComponent<Rigidbody>().AddRelativeForce(-ThrustPower * Input.GetAxis("Vertical") * Time.deltaTime, 0, 0, ForceMode.Acceleration);
+        gameObject.transform.Rotate(0, TurnRate * Input.GetAxis("Horizontal") * Time.deltaTime, 0, Space.Self);
 
     }
 }
