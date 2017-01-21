@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/GameLevel.unity
+- path: Assets/Prefabs/skybox.unity
   isLoaded: 1
   isActive: 1
