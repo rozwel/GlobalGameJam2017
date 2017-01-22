@@ -37,12 +37,12 @@ public class MassController : MonoBehaviour {
         int upperLimit = 300;
         int counter = 0;
         float framerateMultiplier = 1;
-        while (isStarted)// && !hasRun)
+        while (isStarted && allRigids.Count >1)// && !hasRun)
         {
             for (int i = 0; i < allRigids.Count; i++)
             {
                 MassObject thisOne = allRigids[i];
-                for (int j = 0; j < allRigids.Count; j++)
+                for (int j = i+1; j < allRigids.Count; j++)
                 {
                     
                     MassObject other = allRigids[j];
@@ -59,11 +59,23 @@ public class MassController : MonoBehaviour {
                                 Vector3 direction = (other.transform.position - thisOne.transform.position).normalized;
                                 float rangePercent = (1 - Mathf.Clamp((distance / thisOne.range), 0, 1));
                                 //print("force = " + (direction * other.mass * rangePercent) + ", Dir: " + direction + ", mass: " + other.mass + ", range: " + rangePercent);
-                                thisOne.rb.AddForce((direction * other.mass * rangePercent)*(framerateMultiplier*Time.deltaTime));
+                                thisOne.rb.AddForce((direction * other.mass * rangePercent) * (framerateMultiplier * Time.deltaTime));
                                 thisOne.rb.velocity = new Vector3(thisOne.rb.velocity.x, 0, thisOne.rb.velocity.z);
                             }
                         }
-                        
+                        if (distance <= other.range)
+                        {
+                            counter++;
+                            if (other != thisOne && other != null)
+                            {
+
+                                Vector3 direction = (thisOne.transform.position - other.transform.position).normalized;
+                                float rangePercent = (1 - Mathf.Clamp((distance / other.range), 0, 1));
+                                other.rb.AddForce((direction * thisOne.mass * rangePercent) * (framerateMultiplier * Time.deltaTime));
+                                other.rb.velocity = new Vector3(other.rb.velocity.x, 0, other.rb.velocity.z);
+                            }
+                        }
+
                     }
                 }
                 if (counter >= upperLimit)
