@@ -7,73 +7,76 @@ public class MassController : MonoBehaviour {
 
 
     public static List<MassObject> allRigids = new List<MassObject>();
-    public static float massToMerge = 10000;
+    public float gravityConst = 1;
+    public float gravityCutoff = 10;
     bool isStarted = false;
-    bool hasRun = false;
 
     public Text upperLimitText;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         Invoke("LateStart", .00000000001f);
-	}
+    }
 
     IEnumerator coroutine;
 
     void LateStart()
     {
-        foreach (MassObject mo in GameObject.FindObjectsOfType<MassObject>())
-        {
-            allRigids.Add(mo);
-        }
+        //foreach (MassObject mo in GameObject.FindObjectsOfType<MassObject>())
+        //{
+        //    allRigids.Add(mo);
+        //}
         isStarted = true;
         coroutine = MyFixedUpdate();
         StartCoroutine(coroutine);
     }
 
     // Update is called once per frame
-    private IEnumerator MyFixedUpdate ()
+    private IEnumerator MyFixedUpdate()
     {
         int upperLimit = 300;
         int counter = 0;
         float framerateMultiplier = 1;
-        while (isStarted && allRigids.Count >1)// && !hasRun)
+        while (isStarted)// && !hasRun)
         {
+            if (allRigids.Count <= 1)
+            {
+                yield return new WaitForEndOfFrame();
+            }
             for (int i = 0; i < allRigids.Count; i++)
             {
                 MassObject thisOne = allRigids[i];
-                for (int j = i+1; j < allRigids.Count; j++)
+                for (int j = i + 1; j < allRigids.Count; j++)
                 {
-                    
+
+                    counter++;
                     MassObject other = allRigids[j];
-                    
+
                     if (thisOne != null && other != null)
                     {
-                        float distance = Vector3.Distance(thisOne.transform.position, other.transform.position);
-                        if (distance <= thisOne.range)
-                        {
-                            counter++;
-                            if (other != thisOne && other != null)
-                            {
+                        var distance = getDistance(thisOne, other);
+                        if (distance > 50) continue;
 
-                                Vector3 direction = (other.transform.position - thisOne.transform.position).normalized;
-                                float rangePercent = (1 - Mathf.Clamp((distance / thisOne.range), 0, 1));
-                                //print("force = " + (direction * other.mass * rangePercent) + ", Dir: " + direction + ", mass: " + other.mass + ", range: " + rangePercent);
-                                thisOne.rb.AddForce((direction * other.mass * rangePercent) * (framerateMultiplier * Time.deltaTime));
-                                thisOne.rb.velocity = new Vector3(thisOne.rb.velocity.x, 0, thisOne.rb.velocity.z);
-                            }
+                        var attraction = getAttraction(thisOne, other)*gravityConst;
+                        if (other != thisOne && other != null)
+                        {
+
+                            Vector3 direction = (other.transform.position - thisOne.transform.position).normalized;
+                            //float rangePercent = (1 - Mathf.Clamp((distance / thisOne.range), 0, 1));
+                            //print("force = " + (direction * other.mass * rangePercent) + ", Dir: " + direction + ", mass: " + other.mass + ", range: " + rangePercent);
+                            //thisOne.rb.AddForce((direction * thisOne.mass * rangePercent) * (framerateMultiplier * Time.deltaTime));
+                            //thisOne.rb.AddForce((direction * attraction) * (framerateMultiplier * Time.deltaTime));
+                            thisOne.rb.AddForce(direction * attraction);
+                            thisOne.rb.velocity = new Vector3(thisOne.rb.velocity.x, 0, thisOne.rb.velocity.z);
                         }
-                        if (distance <= other.range)
+                        if (other != thisOne && other != null)
                         {
-                            counter++;
-                            if (other != thisOne && other != null)
-                            {
 
-                                Vector3 direction = (thisOne.transform.position - other.transform.position).normalized;
-                                float rangePercent = (1 - Mathf.Clamp((distance / other.range), 0, 1));
-                                other.rb.AddForce((direction * thisOne.mass * rangePercent) * (framerateMultiplier * Time.deltaTime));
-                                other.rb.velocity = new Vector3(other.rb.velocity.x, 0, other.rb.velocity.z);
-                            }
+                            Vector3 direction = (thisOne.transform.position - other.transform.position).normalized;
+                            //float rangePercent = (1 - Mathf.Clamp((distance / other.range), 0, 1));
+                            //other.rb.AddForce((direction * thisOne.mass * rangePercent) * (framerateMultiplier * Time.deltaTime));
+                            other.rb.AddForce((direction * attraction) * (framerateMultiplier * Time.deltaTime));
+                            other.rb.velocity = new Vector3(other.rb.velocity.x, 0, other.rb.velocity.z);
                         }
 
                     }
@@ -103,8 +106,21 @@ public class MassController : MonoBehaviour {
                 //print("RanLoop");
             }
             //print("Ran " + counter + " times");
-            hasRun = true;
         }
+    }
+
+    public static float getDistance(MassObject obj1, MassObject obj2)
+    {
+        if (obj1 == null || obj1.transform == null || obj2 == null || obj2.transform == null) return 0;
+
+        return Vector3.Distance(obj1.transform.position, obj2.transform.position);
+    }
+    public static float getAttraction(MassObject obj1, MassObject obj2)
+    {
+        if (obj1 == null || obj1.transform == null || obj2 == null || obj2.transform == null) return 0;
+
+        float distance = getDistance(obj1, obj2);
+        return obj1.mass * obj2.mass / (distance * distance);
     }
 
 

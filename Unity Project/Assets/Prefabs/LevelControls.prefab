@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1950800502868346}
+  m_IsPrefabParent: 1
+--- !u!1 &1950800502868346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4515619772021426}
+  - component: {fileID: 114657507849546332}
+  - component: {fileID: 114614237930738432}
+  - component: {fileID: 114728078305036784}
+  m_Layer: 0
+  m_Name: LevelControls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4515619772021426
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950800502868346}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114614237930738432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950800502868346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300e7f6b84047d5429eadfb495d486d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroidPrefabs:
+  - {fileID: 1588172463530036, guid: 5b50a1d01bcf8cd4e9a94a57a97b09b6, type: 2}
+  asteroidSkins:
+  - {fileID: 4300000, guid: fe724812f18a4cc4ab0f708c1fd9235f, type: 3}
+  - {fileID: 4300000, guid: 6b457e0e4acc55a49b8aa9f7ecd1aa2d, type: 3}
+  - {fileID: 4300000, guid: 728f3f3d63e21484dbc412200d2d1008, type: 3}
+  - {fileID: 4300000, guid: 551f6aae61cff7a429048ecf5806a509, type: 3}
+  - {fileID: 4300000, guid: 7e9a1c3f113246448982dc57e24a71be, type: 3}
+  - {fileID: 4300000, guid: d65ce88fb434076449d30458c40a464c, type: 3}
+  - {fileID: 4300000, guid: 9e0052e1e3666354184a2794277b3308, type: 3}
+  - {fileID: 4300000, guid: 1333a92eef1afcb4ead0112b80ffe996, type: 3}
+  - {fileID: 4300000, guid: 445d48558950dd5408e0629fc60c6934, type: 3}
+  - {fileID: 4300000, guid: 910f579dda5cb094b9637f6b16b9a7fa, type: 3}
+  - {fileID: 4300000, guid: 76c492683fb22ea4bb09e4e75e7f5d54, type: 3}
+  - {fileID: 4300000, guid: 20307dc16ef77564daf5524781a5f6b2, type: 3}
+  - {fileID: 4300000, guid: 261752101f4ce7a4b91df1d7885c5806, type: 3}
+  - {fileID: 4300000, guid: de5cdce4737883c4194ad204cec3b6ec, type: 3}
+  - {fileID: 4300000, guid: c0c887c8bf6481c4eb1578dbf322abde, type: 3}
+  - {fileID: 4300000, guid: 56f6bed5fd1bdc14fbb5dbd43791419e, type: 3}
+  - {fileID: 4300000, guid: d126d1e49ed7d2b42891bad84fb0696f, type: 3}
+  - {fileID: 4300000, guid: a4c93350de5854241809d10fa97deda2, type: 3}
+  - {fileID: 4300000, guid: 002d066e1f52b2d4fa319c7df5bbaa14, type: 3}
+  - {fileID: 4300000, guid: efe23b25c4e3adb40950b213b783b074, type: 3}
+  - {fileID: 4300000, guid: 7f679ecf2af7aca4b9cf38bfc1d136a1, type: 3}
+  asteroidCount: 100
+  innerLimit: 50
+  outerLimit: 100
+  maxMass: 2
+  scaleMultiplier: 25
+--- !u!114 &114657507849546332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950800502868346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919acea9a2b0cc94c842463b27495272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityConst: 0.001
+  gravityCutoff: 0.001
+  upperLimitText: {fileID: 0}
+--- !u!114 &114728078305036784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950800502868346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5d86179e7897e46ba4ff0a6efdf298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windPrefab: {fileID: 1620339557343300, guid: 3e65d241e1b1d1f4c84f04038aa7dd68, type: 2}
+  rayCount: 36
